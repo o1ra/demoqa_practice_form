@@ -5,16 +5,15 @@ def test_practice_form():
     browser.open("/automation-practice-form")
     browser.element('.main-header').should(have.text("Practice Form"))
     browser.element('#fixedban').execute_script('element.remove()')
-    browser.element('footer').execute_script('element.remove()')
+    browser.element('footer').execute_script(
+        'element.remove()'
+    )  # browser.element('#fixedban').perform(command.js.scroll_into_view)
 
-    # browser.element('#fixedban').execute_script('element.scroll_into_view')
-    # browser.element('#fixedban').perform(command.js.scroll_into_view)
     browser.element("#firstName").type('Irina')
     browser.element("#lastName").type('Kirillova')
     browser.element("#userEmail").type('IrinaQA@gmail.com')
     browser.element('#gender-radio-2').double_click()
     browser.element("#userNumber").type('8909898900')
-
     browser.element("#dateOfBirthInput").click()
     browser.element(".react-datepicker__month-select").click().element(
         by.text("March")
@@ -28,10 +27,10 @@ def test_practice_form():
         ".react-datepicker__day--028:not(.react-datepicker__day--outside-month)"
     ).click()
     browser.element('#currentAddress').perform(command.js.scroll_into_view)
-
-    # browser.element("#subjectsContainer").type('Com')
-    # browser.all("locator").element(by.text("Commerce")).click()
-
+    browser.element("#subjectsInput").type('Com')
+    browser.element(".subjects-auto-complete__menu").element(
+        by.text("Commerce")
+    ).click()
     browser.element("#hobbiesWrapper").element(by.text("Reading")).click()
     browser.element("#hobbiesWrapper").element(by.text("Music")).click()
     browser.element(by.css("input[type=file]")).send_keys(
@@ -41,3 +40,8 @@ def test_practice_form():
     browser.element("#state").click().element(by.text("Haryana")).click()
     browser.element("#city").click().element(by.text("Karnal")).click()
     browser.element("#submit").click()
+
+    browser.element("#example-modal-sizes-title-lg").should(
+        have.text("Thanks for submitting the form")
+    )
+    browser.element("#closeLargeModal").click()
