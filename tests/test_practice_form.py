@@ -1,3 +1,5 @@
+import os
+
 from selene import browser, have, by, command
 
 
@@ -34,7 +36,7 @@ def test_practice_form():
     browser.element("#hobbiesWrapper").element(by.text("Reading")).click()
     browser.element("#hobbiesWrapper").element(by.text("Music")).click()
     browser.element(by.css("input[type=file]")).send_keys(
-        r"C:\Users\user\Downloads\Screenshot_1.png"
+        os.path.abspath('resourses/img/Screenshot_1.png')
     )
     browser.element('#currentAddress').type('Almaty, street Testovaya 1, 44')
     browser.element("#state").click().element(by.text("Haryana")).click()
