@@ -46,4 +46,20 @@ def test_practice_form():
     browser.element("#example-modal-sizes-title-lg").should(
         have.text("Thanks for submitting the form")
     )
+
+    browser.element('.table-responsive').all('td:nth-of-type(2)').should(
+        have.texts(
+            'Irina Kirillova',
+            'IrinaQA@gmail.com',
+            'Female',
+            '8909898900',
+            '28 March,1993',
+            'Commerce',
+            'Reading, Music',
+            'Screenshot_1.png',
+            'Almaty, street Testovaya 1, 44',
+            'Haryana Karnal',
+        )
+    )
+
     browser.element("#closeLargeModal").click()
