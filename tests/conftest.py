@@ -1,7 +1,5 @@
 import pytest
 from selene import browser
-from selene.support import webdriver
-from selenium.webdriver.chrome import options
 
 
 @pytest.fixture(scope="function", autouse=True)
