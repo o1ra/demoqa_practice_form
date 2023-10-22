@@ -4,20 +4,8 @@ from demoqa_tests.data import users_data
 
 def test_practice_form():
     registration_page = RegistrationPage()
+    irina = users_data.irina
 
     registration_page.open()
-
-    registration_page.fill_full_name(users_data.irina)
-    registration_page.fill_email(users_data.irina)
-    registration_page.gender(users_data.irina)
-    registration_page.fill_number(users_data.irina)
-    registration_page.fill_date_of_birth(users_data.irina)
-    registration_page.fill_subject(users_data.irina)
-    registration_page.fill_hobbies(users_data.irina)
-    registration_page.fill_image(users_data.irina)
-    registration_page.fill_address(users_data.irina)
-    registration_page.fill_state_and_city(users_data.irina)
-    registration_page.click_button()
-
-    registration_page.should_have_registrated_user_with(users_data.irina)
-    registration_page.close_modal()
+    registration_page.register_user(irina)
+    registration_page.modal_form(irina)
