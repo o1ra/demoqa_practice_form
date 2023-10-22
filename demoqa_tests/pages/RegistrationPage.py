@@ -2,6 +2,7 @@ from selene import have, by, command
 from selene.support.shared import browser
 
 import resources
+from demoqa_tests.users.user import User
 
 
 class RegistrationPage:
@@ -16,8 +17,8 @@ class RegistrationPage:
         return self
 
     def fill_full_name(self, user: User):
-        browser.element("#firstName").type(user.full_name.first_name)
-        browser.element("#lastName").type(user.full_name.last_name)
+        browser.element("#firstName").type(user.full_name["first_name"])
+        browser.element("#lastName").type(user.full_name["last_name"])
         return self
 
     def fill_email(self, user: User):
@@ -25,7 +26,7 @@ class RegistrationPage:
         return self
 
     def gender(self, user: User):
-        if user.gender== "Female":
+        if user.gender == "Female":
             browser.element('#gender-radio-2').double_click()
         elif user.gender == "Male":
             browser.element('#gender-radio-1').double_click()
@@ -39,32 +40,42 @@ class RegistrationPage:
 
     def fill_date_of_birth(self, user: User):
         browser.element("#dateOfBirthInput").click()
-        browser.element(".react-datepicker__month-select").click().element(
-            by.text(user.date_of_birth.month)
+        # browser.element(".react-datepicker__month-select").click().element(have.value(user.date_of_birth.month)).click()
+        browser.element('.react-datepicker__month-select').send_keys(
+            user.date_of_birth.strftime('%B')
         ).click()
-        browser.element(".react-datepicker__year-select").click().element(
-            by.text(user.date_of_birth.year)
+        # browser.element(".react-datepicker__year-select").click().element(
+        #     have.value(user.date_of_birth.year)
+        # ).click()
+        browser.element('.react-datepicker__year-select').click().send_keys(
+            user.date_of_birth.strftime('%Y')
         ).click()
         # не выбирает нужную дату, если в элементе есть такая же дата в прошлом месяце
         # browser.element(".react-datepicker__month").element(by.text("28")).click()
+        # browser.element(
+        #     f'.react-datepicker__day--0{str(user.date_of_birth.day)}:not(.react-datepicker__day--outside-month)'
+        # ).click()
         browser.element(
-            f'.react-datepicker__day--0{user.date_of_birth.day}:not(.react-datepicker__day--outside-month)'
+            f'.react-datepicker__day--0{user.date_of_birth.strftime("%d")}'
         ).click()
         return self
 
     def fill_subject(self, user: User):
         browser.element('#currentAddress').perform(command.js.scroll_into_view)
         browser.element("#subjectsInput").type(user.subject)
-        browser.element(".subjects-auto-complete__menu").element(by.text(user.subject)
-                                                                 ).click()
+        browser.element(".subjects-auto-complete__menu").element(
+            by.text(user.subject)
+        ).click()
         return self
 
     def fill_hobbies(self, user: User):
-        browser.element("#hobbiesWrapper").element(by.text(user.hobbies)).click()
+        browser.element("#hobbiesWrapper").element(by.text(user.hobbies[0])).click()
         return self
 
     def fill_image(self, user: User):
-        browser.element(by.css("input[type=file]")).send_keys(resources.path(user.image))
+        browser.element(by.css("input[type=file]")).send_keys(
+            resources.path(user.image)
+        )
         return self
 
     def fill_address(self, user: User):
@@ -86,20 +97,23 @@ class RegistrationPage:
         )
         return self
 
-    def should_have_registrated_user_with(self, full_name, email, gender, number, date_of_birth,
-                                          subjects, hobbies, picture, current_address, state_and_city):
+    def should_have_registrated_user_with(self, user: User):
         browser.element('.table').all('td').even.should(
             have.exact_texts(
-                full_name,
-                email,
-                gender,
-                number,
-                date_of_birth,
-                subjects,
-                hobbies,
-                picture,
-                current_address,
-                state_and_city
+                f'{user.full_name["first_name"]} {user.full_name["last_name"]}',
+                f'{user.email}',
+                f'{user.gender}',
+                f'{user.number}',
+                '{0} {1},{2}'.format(
+                    user.date_of_birth.strftime("%d"),
+                    user.date_of_birth.strftime("%B"),
+                    user.date_of_birth.strftime("%Y"),
+                ),
+                f'{user.subject}',
+                f'{user.hobbies[0]}',
+                f'{user.image}',
+                f'{user.address}',
+                f'{user.state} {user.city}',
             )
         )
         return self
