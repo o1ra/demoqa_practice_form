@@ -1,4 +1,4 @@
-from demoqa_tests.pages.RegistrationPage import RegistrationPage
+from demoqa_tests.pages.registration_page import RegistrationPage
 from demoqa_tests.data import users_data
 
 
