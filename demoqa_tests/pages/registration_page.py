@@ -10,7 +10,7 @@ class RegistrationPage:
         pass
 
     def open(self):
-        browser.open("https://demoqa.com/automation-practice-form")
+        browser.open("/automation-practice-form")
         browser.element('.main-header').should(have.text("Practice Form"))
         browser.element('#fixedban').execute_script('element.remove()')
         browser.element('footer').execute_script('element.remove()')
