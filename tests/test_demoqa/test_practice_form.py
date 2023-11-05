@@ -5,7 +5,7 @@ from demoqa_tests.data import users_data
 
 
 @allure.title("Successful fill form")
-def test_practice_form(setup_browser):
+def test_practice_form():
     registration_page = RegistrationPage()
 
     with allure.step("Open registrations form"):
