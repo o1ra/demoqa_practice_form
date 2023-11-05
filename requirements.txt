@@ -1,4 +1,4 @@
 pytest
 allure-pytest
-selene
 python-dotenv
+selene==2.0.0rc4
