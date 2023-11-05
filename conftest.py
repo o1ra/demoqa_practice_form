@@ -36,9 +36,10 @@ def setup_browser(request):
 
     login = os.getenv('LOGIN')
     password = os.getenv('PASSWORD')
+    remote_driver_url = os.getenv('REMOTE_DRIVER_URL')
 
     driver = webdriver.Remote(
-        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
+        command_executor=f"https://{login}:{password}@{remote_driver_url}",
         options=options,
     )
     browser.config.driver = driver
