@@ -27,11 +27,11 @@ class RegistrationPage:
 
     def gender(self, user: User):
         if user.gender == "Female":
-            browser.element('[for='gender-radio-2']').click()
+            browser.element("[for='gender-radio-2']").click()
         elif user.gender == "Male":
-            browser.element('[for='gender-radio-1']').click()
+            browser.element("[for='gender-radio-1']").click()
         elif user.gender == "Other":
-            browser.element('[for='gender-radio-3']').click()
+            browser.element("[for='gender-radio-3']").click()
         return self
 
     def fill_number(self, user: User):
